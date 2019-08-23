@@ -1,0 +1,2 @@
+# HelloCode
+ typescript example
