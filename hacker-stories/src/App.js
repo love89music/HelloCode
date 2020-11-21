@@ -1,41 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useRef, useState } from "react"
+import { TestButton } from "./TestButton";
+import { TestButton1 } from './TestButton1';
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
 
 function App() {
+  // useSemiPersistentState(123, 123)
+  const [value, setRed] = useState(true)
+
+  const handleColor = () => {
+    console.log(value);
+    setRed(!value);
+  }
   return (
-    <div>
-      <h1>My Hacker Stories</h1>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
-      <hr />
-      {list.map((item) => <div key={item.objectID}>
-        <span>
-          <a href={item.url}>{item.title}</a>
-        </span>
-        <span>{item.author}</span>
-        <span>{item.num_comments}</span>
-        <span>{item.points}</span></div>)}
-    </div>
+    <>
+      <TestButton isShowRed={value}></TestButton>
+      <button onClick={handleColor}>change color</button>
+      <hr></hr>
+      <TestButton1 color={value ? "red" : "blue"}>123</TestButton1>
+    </>
+
   );
 }
+
+const useSemiPersistentState = (key, initialState) => {
+  const isMounted = useRef(false);
+  console.log('A');
+  const [value, setValue] = React.useState(
+    console.log('B') || localStorage.getItem(key) || initialState
+  );
+  console.log('C');
+  React.useEffect(() => {
+    if (isMounted.current) {
+      console.log('D');
+      localStorage.setItem(key, value);
+    } else {
+      isMounted.current = true;
+    }
+  }, [value, key]);
+  console.log('E');
+  return [value, setValue];
+};
 
 export default App;
