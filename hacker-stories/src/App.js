@@ -2,6 +2,7 @@ import './App.css';
 import React, { useRef, useState } from "react"
 import { TestButton } from "./TestButton";
 import { TestButton1 } from './TestButton1';
+import { TextInput } from './principle2';
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
       <button onClick={handleColor}>change color</button>
       <hr></hr>
       <TestButton1 color={value ? "red" : "blue"}>123</TestButton1>
+      <hr></hr>
+      <TextInput key={value}/>
     </>
 
   );
